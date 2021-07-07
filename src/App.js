@@ -8,6 +8,7 @@ import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
 import Price from "./Price";
 import ReservationCalendar from "./ReservationCalendar";
+import ReservationCalendar2 from "./ReservationCalendar2";
 
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
@@ -220,6 +221,7 @@ function App(props) {
         <Price />
         <button>Open Now</button>
         <button>Make Reservation</button>
+        <ReservationCalendar2 />
       </div>
       <div>
         {/* <h3>
