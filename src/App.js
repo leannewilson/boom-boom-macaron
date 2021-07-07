@@ -1,7 +1,10 @@
-// import logo from "./logo.svg";
+import logo from "./logo.png";
 import "./App.css";
 import React, { useState } from "react";
 import axios from "axios";
+import StarRating from "./StarRating";
+import searchButton from "./searchButton.png";
+import Price from "./Price";
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
 
@@ -17,7 +20,7 @@ function App(props) {
 
     axios
       .get(
-        `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&limit=3`,
+        `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&limit=10`,
         {
           headers: {
             Authorization: `Bearer ${API_KEY}`,
@@ -53,7 +56,7 @@ function App(props) {
         setReviews(res.data);
       });
   };
-  console.log(reviews);
+  // console.log(reviews);
   console.log(businesses);
   // console.log(amountResults);
 
@@ -67,43 +70,44 @@ function App(props) {
   // let result = sentiment.analyze("Bad yelp reviews.");
   // console.log(result);
 
-  // show all businesses
   const ShowBusinesses = () => {
     return businesses.map((b) => {
       return (
-        <div
-          key={b.id}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            paddingBottom: "2em",
-          }}
-        >
-          <img
-            src={b.image_url}
-            style={{ width: "220px", paddingRight: "2em" }}
-            alt="business images"
-          />
-          <span style={{ width: "15%", paddingRight: "2em" }}>
-            <h2>{b.name}</h2>
-            <h4>Rating: {b.rating}</h4>
-            <h4>Price: {b.price}</h4>
-            <h4>Total reviews: {b.review_count}</h4>
-          </span>
-          <span style={{ width: "15%", paddingLeft: "2em" }}>
-            <h4>{b.location.display_address[0]}</h4>
-            <h4>{b.location.display_address[1]}</h4>
-            <h4>{b.display_phone}</h4>
+        <div className="results-all" key={b.id}>
+          <img className="result-img" src={b.image_url} alt="business images" />
+          <span>
+            <h2 className="result-name">{b.name}</h2>
+            <h4 className="result-rating">
+              Rating: <StarRating />
+              {b.rating}
+            </h4>
+            <h4 className="result-price">Price: {b.price}</h4>
+            <h4 className="result-reviews">Total reviews: {b.review_count}</h4>
+            <div className="result-contact">
+              <span className="result-address">
+                <h4 className="result-address">
+                  {b.location.display_address[0]}
+                </h4>
+                <h4 className="result-address">
+                  {b.location.display_address[1]}
+                </h4>
+                <h4 className="result-address">
+                  {b.location.display_address[2]}
+                </h4>
+              </span>
+              <span className="contact">
+                <h4 className="result-phone">{b.display_phone}</h4>
+              </span>
+            </div>
           </span>
         </div>
       );
     });
   };
 
-  // show 3 revies of each business
   const ShowReviews = () => {
     return reviews.map((r, index) => {
-      console.log(r.data.reviews[0].text);
+      console.log(r.data.reviews.text);
       return (
         <div key={index} style={{ width: "50%", margin: "auto" }}>
           <h4>{r.data.reviews[0].text}</h4>
@@ -115,33 +119,81 @@ function App(props) {
   return (
     <div className="App">
       <div>
+        <img
+          src={logo} //logo sizing, main page
+          style={{ width: "60vw", paddingTop: "3em" }}
+          alt="BBM logo"
+        />
+      </div>
+      <div>
         <form onSubmit={submit}>
-          <span>Search</span>
+          <span style={{ fontSize: "22px" }}>Find</span>
           <input
+            className="input"
+            style={{
+              width: "20vw",
+              height: "35px",
+              marginTop: "2em",
+              paddingTop: "5px",
+              borderRadius: "4px",
+              fontSize: "22px",
+            }}
             onChange={(e) => setTerm(e.target.value)}
             name="term"
             placeholder="Coffee, Sushi, Dessert..."
             type="text"
             value={term}
           />
-          <span>Near</span>
+          <span style={{ fontSize: "22px" }}>Near</span>
           <input
+            className="input"
+            style={{
+              width: "20vw",
+              height: "35px",
+              marginTop: "2em",
+              paddingTop: "5px",
+              borderRadius: "4px",
+              fontSize: "22px",
+              paddingRight: "0",
+              marginRight: "0",
+            }}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="San Diego"
             name="location"
             type="text"
             value={location}
           />
-          <button>🍩</button>
+          <button
+            style={{
+              height: "43px",
+              marginTop: "15px",
+              paddingBottom: "0",
+              marginBottom: "0",
+            }}
+          >
+            <img
+              style={{
+                height: "35px",
+                borderRadius: "4px",
+              }}
+              src={searchButton} //logo sizing, main page
+              alt="Search button"
+            />
+          </button>
         </form>
+        <Price />
+        <button>Open Now</button>
+        <button>Make Reservation</button>
       </div>
-      <span>
-        {term} near {location}
-      </span>
       <div>
-        {" "}
-        Showing {businesses.length} of {amountResults}{" "}
+        {/* <h3>
+          {term} near {location}
+        </h3> */}
+        <h3 style={{ fontWeight: "300" }}>
+          Showing {businesses.length} of {amountResults}
+        </h3>
       </div>
+
       <ShowBusinesses />
       <ShowReviews />
     </div>
