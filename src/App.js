@@ -1,10 +1,14 @@
 import logo from "./logo.png";
 import "./App.css";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
+import { promises } from "stream";
 import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
 import Price from "./Price";
+import ReservationCalendar from "./ReservationCalendar";
+
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
 
@@ -14,10 +18,9 @@ function App(props) {
   const [businesses, setBusinesses] = useState([]);
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
+  // const [hours, setHours] = useState([]);
 
   const search = () => {
-    console.log("yelp api");
-
     axios
       .get(
         `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&limit=10`,
@@ -28,7 +31,7 @@ function App(props) {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setBusinesses(res.data.businesses);
         setAmountResults(res.data.total);
         getReviews(res.data.businesses);
@@ -39,25 +42,42 @@ function App(props) {
   };
 
   const getReviews = (allBusinesses) => {
-    let allReviews = allBusinesses
-      .map(async (eachBusiness) => {
-        // console.log(eachBusiness);
-        return await axios.get(
-          `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${eachBusiness.id}/reviews`,
-          {
-            headers: {
-              Authorization: `Bearer ${API_KEY}`,
-            },
-          }
-        );
-      })
-      .then((res) => {
-        // console.log(res);
-        setReviews(res.data);
-      });
+    let allReviews = allBusinesses.map(async (eachBusiness) => {
+      // console.log(eachBusiness);
+      return await axios.get(
+        `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${eachBusiness.id}/reviews`,
+        {
+          headers: {
+            Authorization: `Bearer ${API_KEY}`,
+          },
+        }
+      );
+    });
+    Promise.all(allReviews).then((res) => {
+      // console.log(res);
+      setReviews(res);
+    });
   };
+
+  // const getHours = () => {
+  //   allBusinesses.map(async (eachBusiness)
+  //   // console.log(eachBusiness);
+  //   return axios
+  //     .get(
+  //       `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${eachBusiness.id}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${API_KEY}`,
+  //         },
+  //       }
+  //     )
+  //     .then((res) => {
+  //       setHours(res);
+  //     });
+  // };
+  // console.log(hours);
   // console.log(reviews);
-  console.log(businesses);
+  // console.log(businesses);
   // console.log(amountResults);
 
   const submit = (e) => {
@@ -100,6 +120,8 @@ function App(props) {
               </span>
             </div>
           </span>
+
+          <ReservationCalendar />
         </div>
       );
     });
@@ -107,21 +129,35 @@ function App(props) {
 
   const ShowReviews = () => {
     return reviews.map((r, index) => {
-      console.log(r.data.reviews.text);
+      // console.log(r.data);
       return (
         <div key={index} style={{ width: "50%", margin: "auto" }}>
+          <h4>{r.data.reviews[0].rating}</h4>
+          <h4>{r.data.reviews[0].time_created}</h4>
+          <h4>{r.data.reviews[0].user.name}</h4>
           <h4>{r.data.reviews[0].text}</h4>
+          <img
+            src="https://randomuser.me/api/portraits/thumb/women/5.jpg"
+            alt="user photo"
+          ></img>
         </div>
       );
     });
   };
+
+  // const GetHours = () => {
+  //   return reviews.map((hours, index) => {
+  //     console.log(hours.data);
+  //     return (<div></div>)
+  //   }
+  // };
 
   return (
     <div className="App">
       <div>
         <img
           src={logo} //logo sizing, main page
-          style={{ width: "60vw", paddingTop: "3em" }}
+          style={{ width: "60vw", paddingTop: "2em" }}
           alt="BBM logo"
         />
       </div>

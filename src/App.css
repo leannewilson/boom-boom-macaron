@@ -2,6 +2,7 @@
   text-align: center;
   font-family: "Poppins", sans-serif;
   color: black;
+  overflow-x: hidden;
 }
 
 /* search fields */
@@ -92,6 +93,40 @@ li:hover {
   font-weight: 600;
   margin-top: 20px;
   width: 400px;
+}
+
+/* reservation calendar */
+.calendar {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  width: 50px;
+  height: 50px;
+}
+.react-calendar {
+  margin: auto;
+  outline: none;
+  z-index: 10;
+  position: relative;
+}
+
+.react-calendar:focus {
+  margin: auto;
+  outline: 0px solid transparent;
+  border: 0px solid transparent;
+}
+
+.react-calendar,
+.react-calendar *,
+.react-calendar *:before,
+.react-calendar *:after {
+  outline: none;
+  border: none;
+}
+
+.calender-dropdown {
+  outline: none;
+  border: none;
 }
 .result-rating {
   display: flex;
