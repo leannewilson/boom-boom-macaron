@@ -18,7 +18,6 @@ function App(props) {
   const [businesses, setBusinesses] = useState([]);
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
-  const [open, setOpen] = useState(true);
 
   const search = () => {
     axios
@@ -42,11 +41,6 @@ function App(props) {
   };
 
   console.log(businesses);
-  // const openNow = () => {
-  //   return businesses.map((open) => {
-  //     open.is_v
-  //   })
-  // }
 
   const getReviews = (allBusinesses) => {
     let allReviews = allBusinesses.map(async (eachBusiness) => {
