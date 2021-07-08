@@ -79,6 +79,11 @@ function App(props) {
     return businesses.map((b) => {
       return (
         <div>
+          <div>
+            <h3 style={{ fontWeight: "300" }}>
+              Showing {businesses.length} of {amountResults}
+            </h3>
+          </div>
           <div className="results-all" key={b.id}>
             <img
               className="result-img"
@@ -220,11 +225,6 @@ function App(props) {
         <Price />
         <button>Open Now</button>
         <button>Make Reservation</button>
-      </div>
-      <div>
-        <h3 style={{ fontWeight: "300" }}>
-          Showing {businesses.length} of {amountResults}
-        </h3>
       </div>
 
       <ShowBusinesses />
