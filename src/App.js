@@ -121,13 +121,6 @@ function App(props) {
     });
   };
 
-  // const tag = () => {
-  //   return businesses.map((catagory) => {
-  //     return (
-  //     <div key={businesses.id + catagory.title}>{catagory.title}</div>
-  //     )}
-  //     }
-
   const ShowReviews = () => {
     return reviews.map((r, index) => {
       // console.log(r.data);
@@ -153,6 +146,37 @@ function App(props) {
           Showing {businesses.length} of {amountResults}
         </div>
       );
+    }
+    return null;
+  };
+
+  //help
+  // const openNow = () => {
+  //   console.log("are you working");
+  //   let openNowArr = [...businesses];
+  //   return openNowArr.map((b) => {
+  //     if (b.is_closed === false) {
+  //       return openNowArr;
+  //     }
+  //   });
+  // };
+  const openNow = businesses.filter(function (open) {
+    if (businesses.is_closed === false) return businesses;
+  });
+  const ShowOpen = openNow.map(function (isOpenNow) {
+    return <div>{isOpenNow}</div>;
+  });
+
+  //help
+  const sortByPrice = () => {
+    if (businesses.price === "$") {
+      return businesses;
+    } else if (businesses.price === "$$") {
+      return businesses;
+    } else if (businesses.price === "$$$") {
+      return businesses;
+    } else if (businesses.price === "$$$$") {
+      return businesses;
     }
     return null;
   };
@@ -223,8 +247,7 @@ function App(props) {
           </button>
         </form>
         <Price />
-        <button>Open Now</button>
-        <button>Make Reservation</button>
+        <button onClick={ShowOpen}>Open Now</button>
       </div>
       <TotalResults />
       <ShowBusinesses />

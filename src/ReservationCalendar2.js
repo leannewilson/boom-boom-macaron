@@ -19,7 +19,7 @@ function ReservationCalendar2(props) {
   };
 
   const ReservationCalendar = () => {
-    console.log(startDate);
+    // console.log(startDate);
     //console.log(reservation);
     return (
       <DatePicker
@@ -61,21 +61,6 @@ function ReservationCalendar2(props) {
       setReservation(copyReservation);
       console.log(e.target.name, e.target.value);
     };
-
-    // const confirmation = (e) => {
-    //   console.log("confirm");
-    //   return confirmAlert({
-    //     title: "Confirm reservation", // Title dialog
-    //     message: "We look forward to seeing you.", // Message dialog
-    //     childrenElement: () => <div></div>, // Custom UI or Component
-
-    //     cancelLabel: "Cancel", // Text button cancel
-    //     confirmLabel: "Confirm", // Text button confirm
-    //     onConfirm: () => alert("Action after Confirm"), // Action after Confirm
-    //     onCancel: () => alert("Action after Cancel"), // Action after Cancel
-    //     overlayClassName: "overlay-custom-class-name", // Custom overlay class name
-    //   });
-    // };
 
     return (
       <div className="App">
@@ -140,7 +125,12 @@ function ReservationCalendar2(props) {
                       name="size"
                       type="number"
                     />
-                    <button className="contact-info-reso">Confirm</button>
+                    <button
+                      className="contact-info-reso"
+                      onClick={() => confirmation()}
+                    >
+                      Confirm
+                    </button>
                   </form>
                 </div>
               </main>
@@ -152,6 +142,21 @@ function ReservationCalendar2(props) {
         </button>
       </div>
     );
+  };
+
+  const confirmation = (e) => {
+    console.log("confirm");
+    return confirmAlert({
+      title: "Confirm reservation", // Title dialog
+      message: "We look forward to seeing you.", // Message dialog
+      childrenElement: () => <div></div>, // Custom UI or Component
+
+      cancelLabel: "Cancel", // Text button cancel
+      confirmLabel: "Confirm", // Text button confirm
+      onConfirm: () => alert("Action after Confirm"), // Action after Confirm
+      onCancel: () => alert("Action after Cancel"), // Action after Cancel
+      overlayClassName: "overlay-custom-class-name", // Custom overlay class name
+    });
   };
 
   return (
