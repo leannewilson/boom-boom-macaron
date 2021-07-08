@@ -1,14 +1,14 @@
 import logo from "./logo.png";
 import "./App.css";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from "axios";
 import { promises } from "stream";
 import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
 import Price from "./Price";
-import ReservationCalendar from "./ReservationCalendar";
 import ReservationCalendar2 from "./ReservationCalendar2";
+import ReviewModal from "./ReviewModal";
 
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
@@ -19,7 +19,6 @@ function App(props) {
   const [businesses, setBusinesses] = useState([]);
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
-  // const [hours, setHours] = useState([]);
 
   const search = () => {
     axios
@@ -94,35 +93,50 @@ function App(props) {
   const ShowBusinesses = () => {
     return businesses.map((b) => {
       return (
-        <div className="results-all" key={b.id}>
-          <img className="result-img" src={b.image_url} alt="business images" />
-          <span>
-            <h2 className="result-name">{b.name}</h2>
-            <h4 className="result-rating">
-              Rating: <StarRating />
-              {b.rating}
-            </h4>
-            <h4 className="result-price">Price: {b.price}</h4>
-            <h4 className="result-reviews">Total reviews: {b.review_count}</h4>
-            <div className="result-contact">
-              <span className="result-address">
-                <h4 className="result-address">
-                  {b.location.display_address[0]}
-                </h4>
-                <h4 className="result-address">
-                  {b.location.display_address[1]}
-                </h4>
-                <h4 className="result-address">
-                  {b.location.display_address[2]}
-                </h4>
-              </span>
-              <span className="contact">
-                <h4 className="result-phone">{b.display_phone}</h4>
-              </span>
-            </div>
-          </span>
+        <div>
+          <div className="results-all" key={b.id}>
+            <img
+              className="result-img"
+              src={b.image_url}
+              alt="business images"
+            />
+            <span>
+              <h2 className="result-name">{b.name}</h2>
+              <h4 className="result-rating">
+                Rating: <StarRating />
+                {b.rating}
+              </h4>
+              <h4 className="result-price">Price: {b.price}</h4>
 
-          <ReservationCalendar />
+              <button id="myBtn">
+                <h4 className="result-reviews">
+                  Total reviews: {b.review_count}
+                </h4>
+              </button>
+
+              <ReviewModal />
+
+              <div className="result-contact">
+                <span className="result-address">
+                  <h4 className="result-address">
+                    {b.location.display_address[0]}
+                  </h4>
+                  <h4 className="result-address">
+                    {b.location.display_address[1]}
+                  </h4>
+                  <h4 className="result-address">
+                    {b.location.display_address[2]}
+                  </h4>
+                </span>
+                <span className="contact">
+                  <h4 className="result-phone">{b.display_phone}</h4>
+                </span>
+              </div>
+            </span>
+          </div>
+          <div className="reso-overlay">
+            <ReservationCalendar2 />
+          </div>
         </div>
       );
     });
@@ -221,12 +235,8 @@ function App(props) {
         <Price />
         <button>Open Now</button>
         <button>Make Reservation</button>
-        <ReservationCalendar2 />
       </div>
       <div>
-        {/* <h3>
-          {term} near {location}
-        </h3> */}
         <h3 style={{ fontWeight: "300" }}>
           Showing {businesses.length} of {amountResults}
         </h3>

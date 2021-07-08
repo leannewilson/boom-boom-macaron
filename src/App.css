@@ -96,38 +96,7 @@ li:hover {
 }
 
 /* reservation calendar */
-.calendar {
-  display: flex;
-  flex-direction: row;
-  align-self: center;
-  width: 50px;
-  height: 50px;
-}
-.react-calendar {
-  margin: auto;
-  outline: none;
-  z-index: 10;
-  position: relative;
-}
 
-.react-calendar:focus {
-  margin: auto;
-  outline: 0px solid transparent;
-  border: 0px solid transparent;
-}
-
-.react-calendar,
-.react-calendar *,
-.react-calendar *:before,
-.react-calendar *:after {
-  outline: none;
-  border: none;
-}
-
-.calender-dropdown {
-  outline: none;
-  border: none;
-}
 .result-rating {
   display: flex;
   justify-content: center;
@@ -164,4 +133,68 @@ li:hover {
 }
 .result-phone {
   font-weight: 400;
+}
+
+.reso-overlay {
+  position: relative;
+  bottom: 280px;
+  left: 330px;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.modal-reso {
+  position: fixed;
+  z-index: 20;
+  background: #fff;
+  width: 500px;
+
+  /* Center the modal */
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.modal__header-reso {
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal__main-reso {
+  padding: 0 20px 20px 20px;
+}
+
+.close-button-reso {
+  border: none;
+  background: transparent;
+  padding: 10px;
+  cursor: pointer;
+  color: black;
+  font-size: 36px;
+}
+
+.button-reso {
+  border: none;
+  padding: 10px 20px;
+  color: black;
+  cursor: pointer;
+}
+
+.button-reso:hover {
+  background: white;
+}
+
+.contact-info-reso {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
 }
