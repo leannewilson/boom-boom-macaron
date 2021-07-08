@@ -1,7 +1,6 @@
 import logo from "./logo.png";
 import "./App.css";
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
 import axios from "axios";
 import { promises } from "stream";
 import StarRating from "./StarRating";
@@ -19,6 +18,7 @@ function App(props) {
   const [businesses, setBusinesses] = useState([]);
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
+  const [open, setOpen] = useState(true);
 
   const search = () => {
     axios
@@ -41,6 +41,13 @@ function App(props) {
       });
   };
 
+  console.log(businesses);
+  // const openNow = () => {
+  //   return businesses.map((open) => {
+  //     open.is_v
+  //   })
+  // }
+
   const getReviews = (allBusinesses) => {
     let allReviews = allBusinesses.map(async (eachBusiness) => {
       // console.log(eachBusiness);
@@ -59,23 +66,6 @@ function App(props) {
     });
   };
 
-  // const getHours = () => {
-  //   allBusinesses.map(async (eachBusiness)
-  //   // console.log(eachBusiness);
-  //   return axios
-  //     .get(
-  //       `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${eachBusiness.id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${API_KEY}`,
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {
-  //       setHours(res);
-  //     });
-  // };
-  // console.log(hours);
   // console.log(reviews);
   // console.log(businesses);
   // console.log(amountResults);
@@ -84,11 +74,6 @@ function App(props) {
     e.preventDefault();
     search();
   };
-
-  // let Sentiment = require("sentiment");
-  // let sentiment = new Sentiment();
-  // let result = sentiment.analyze("Bad yelp reviews.");
-  // console.log(result);
 
   const ShowBusinesses = () => {
     return businesses.map((b) => {
@@ -114,7 +99,7 @@ function App(props) {
                 </h4>
               </button>
 
-              <ReviewModal />
+              {/* <ReviewModal /> */}
 
               <div className="result-contact">
                 <span className="result-address">
@@ -142,6 +127,13 @@ function App(props) {
     });
   };
 
+  // const tag = () => {
+  //   return businesses.map((catagory) => {
+  //     return (
+  //     <div key={businesses.id + catagory.title}>{catagory.title}</div>
+  //     )}
+  //     }
+
   const ShowReviews = () => {
     return reviews.map((r, index) => {
       // console.log(r.data);
@@ -159,13 +151,6 @@ function App(props) {
       );
     });
   };
-
-  // const GetHours = () => {
-  //   return reviews.map((hours, index) => {
-  //     console.log(hours.data);
-  //     return (<div></div>)
-  //   }
-  // };
 
   return (
     <div className="App">
