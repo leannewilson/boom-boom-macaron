@@ -79,11 +79,6 @@ function App(props) {
     return businesses.map((b) => {
       return (
         <div>
-          <div>
-            <h3 style={{ fontWeight: "300" }}>
-              Showing {businesses.length} of {amountResults}
-            </h3>
-          </div>
           <div className="results-all" key={b.id}>
             <img
               className="result-img"
@@ -157,6 +152,17 @@ function App(props) {
     });
   };
 
+  const TotalResults = () => {
+    if (amountResults > 0) {
+      return (
+        <div>
+          Showing {businesses.length} of {amountResults}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="App">
       <div>
@@ -226,7 +232,7 @@ function App(props) {
         <button>Open Now</button>
         <button>Make Reservation</button>
       </div>
-
+      <TotalResults />
       <ShowBusinesses />
       <ShowReviews />
     </div>
