@@ -7,6 +7,7 @@ import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
 import Price from "./Price";
 import ReservationCalendar2 from "./ReservationCalendar2";
+import { Link } from "react-router-dom";
 
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
@@ -73,44 +74,51 @@ function App(props) {
     return businesses.map((b) => {
       return (
         <div>
-          <div className="results-all" key={b.id}>
-            <img
-              className="result-img"
-              src={b.image_url}
-              alt="business images"
-            />
-            <span className="biz-info">
-              <h2 className="result-name biz-info">{b.name}</h2>
-              <h4 className="result-rating" style={{ paddingBottom: "10px" }}>
-                Rating:
-                <StarRating />
-                {b.rating}
-              </h4>
-              <h4 className="result-price">Price: {b.price}</h4>
-              <h4 className="result-reviews">
-                Total reviews: {b.review_count}
-              </h4>
-              <div className="result-contact">
-                <span className="result-address">
-                  <h4 className="result-address">
-                    {b.location.display_address[0]}
+          <a target="_blank" href={b.url}>
+            <div className="results-all" key={b.id}>
+              <img
+                className="result-img"
+                src={b.image_url}
+                alt="business images"
+              />
+              <span className="biz-info">
+                <div className="biz-info">
+                  <h2 className="result-name biz-info">{b.name}</h2>
+                  <h4
+                    className="result-rating"
+                    style={{ paddingBottom: "10px" }}
+                  >
+                    Rating:
+                    <StarRating />
+                    {b.rating}
                   </h4>
-                  <h4 className="result-address">
-                    {b.location.display_address[1]}
+                  <h4 className="result-price">Price: {b.price}</h4>
+                  <h4 className="result-reviews">
+                    Total reviews: {b.review_count}
                   </h4>
-                  <h4 className="result-address">
-                    {b.location.display_address[2]}
-                  </h4>
-                </span>
-                <span className="contact">
-                  <h4 className="result-phone">{b.display_phone}</h4>
-                </span>
-              </div>
-            </span>
-          </div>
-          <div className="reso-overlay">
-            <ReservationCalendar2 />
-          </div>
+                  <div className="result-contact">
+                    <span className="result-address">
+                      <h4 className="result-address">
+                        {b.location.display_address[0]}
+                      </h4>
+                      <h4 className="result-address">
+                        {b.location.display_address[1]}
+                      </h4>
+                      <h4 className="result-address">
+                        {b.location.display_address[2]}
+                      </h4>
+                    </span>
+                    <span className="contact">
+                      <h4 className="result-phone">{b.display_phone}</h4>
+                    </span>
+                  </div>
+                </div>
+              </span>
+            </div>
+            <div className="reso-overlay">
+              <ReservationCalendar2 />
+            </div>
+          </a>
         </div>
       );
     });
@@ -173,7 +181,7 @@ function App(props) {
       </div>
     );
   };
-
+  console.log(businesses);
   return (
     <div className="App">
       <div>
