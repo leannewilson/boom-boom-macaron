@@ -268,4 +268,10 @@ li:hover {
   .input::placeholder {
     font-size: 16px;
   }
+  /* .reservation-calendar {
+    position: absolute;
+  }
+  .button-res0 {
+    display: hidden;
+  } */
 }

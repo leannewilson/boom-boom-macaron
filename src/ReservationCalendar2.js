@@ -179,8 +179,9 @@ function ReservationCalendar2(props) {
 
   return (
     <div className="reservation-calendar">
-      <div>
+      <div className="reservation-calendar">
         <img
+          className="reservation-calendar"
           onClick={() => setInline(!inline)}
           className="calendar-img"
           src="https://img.icons8.com/ios/50/000000/calendar--v2.png"
@@ -190,7 +191,7 @@ function ReservationCalendar2(props) {
       <div className="reservation-calendar">
         <ReservationCalendar />
       </div>
-      <span>
+      <span className="reservation-calendar">
         <Modal />
       </span>
     </div>
