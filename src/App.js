@@ -7,7 +7,7 @@ import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
 import Price from "./Price";
 import ReservationCalendar2 from "./ReservationCalendar2";
-import ReviewModal from "./ReviewModal";
+import Reviews from "./Reviews.js";
 
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
@@ -16,8 +16,18 @@ function App(props) {
   let [term, setTerm] = useState("");
   let [location, setLocation] = useState("");
   const [businesses, setBusinesses] = useState([]);
+  const [allBusinesses, setAllBusinesses] = useState([]);
+
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
+  const [price, setThePrice] = useState("");
+  const setPrice = (p) => {
+    console.log(p);
+    let copyOfBusinesses = [...allBusinesses].filter(
+      (eachBiz) => eachBiz.price === p
+    );
+    setBusinesses(copyOfBusinesses);
+  };
 
   const search = () => {
     axios
@@ -32,6 +42,7 @@ function App(props) {
       .then((res) => {
         // console.log(res);
         setBusinesses(res.data.businesses);
+        setAllBusinesses(res.data.businesses);
         setAmountResults(res.data.total);
         getReviews(res.data.businesses);
       })
@@ -40,7 +51,7 @@ function App(props) {
       });
   };
 
-  console.log(businesses);
+  console.log(businesses, "?");
 
   const getReviews = (allBusinesses) => {
     let allReviews = allBusinesses.map(async (eachBusiness) => {
@@ -55,21 +66,22 @@ function App(props) {
       );
     });
     Promise.all(allReviews).then((res) => {
-      // console.log(res);
+      console.log(res);
+      let biggerBusinez = [];
+      allBusinesses.forEach((business, i) => {
+        business.reviews = res[i].data.reviews;
+      });
+      setBusinesses(allBusinesses);
       setReviews(res);
     });
   };
-
-  // console.log(reviews);
-  // console.log(businesses);
-  // console.log(amountResults);
 
   const submit = (e) => {
     e.preventDefault();
     search();
   };
 
-  const ShowBusinesses = () => {
+  const ShowBusinesses = (props) => {
     return businesses.map((b) => {
       return (
         <div>
@@ -81,20 +93,18 @@ function App(props) {
             />
             <span>
               <h2 className="result-name">{b.name}</h2>
-              <h4 className="result-rating">
-                Rating: <StarRating />
+              <h4 className="result-rating" style={{ paddingBottom: "10px" }}>
+                Rating:
+                <StarRating />
                 {b.rating}
               </h4>
               <h4 className="result-price">Price: {b.price}</h4>
-
-              <button id="myBtn">
-                <h4 className="result-reviews">
-                  Total reviews: {b.review_count}
-                </h4>
-              </button>
-
+              <h4 className="result-reviews">
+                Total reviews: {b.review_count}
+                <Reviews />
+              </h4>
               {/* <ReviewModal /> */}
-
+              {/* <div>{b.reviews.map((a) => a.text)}</div> */}
               <div className="result-contact">
                 <span className="result-address">
                   <h4 className="result-address">
@@ -121,9 +131,9 @@ function App(props) {
     });
   };
 
-  const ShowReviews = () => {
+  const ShowReviews = (props) => {
     return reviews.map((r, index) => {
-      // console.log(r.data);
+      console.log(r.data);
       return (
         <div key={index} style={{ width: "50%", margin: "auto" }}>
           <h4>{r.data.reviews[0].rating}</h4>
@@ -142,7 +152,7 @@ function App(props) {
   const TotalResults = () => {
     if (amountResults > 0) {
       return (
-        <div>
+        <div className="show-results">
           Showing {businesses.length} of {amountResults}
         </div>
       );
@@ -150,35 +160,35 @@ function App(props) {
     return null;
   };
 
-  //help
-  // const openNow = () => {
-  //   console.log("are you working");
-  //   let openNowArr = [...businesses];
-  //   return openNowArr.map((b) => {
-  //     if (b.is_closed === false) {
-  //       return openNowArr;
-  //     }
-  //   });
-  // };
-  const openNow = businesses.filter(function (open) {
-    if (businesses.is_closed === false) return businesses;
-  });
-  const ShowOpen = openNow.map(function (isOpenNow) {
-    return <div>{isOpenNow}</div>;
-  });
-
-  //help
-  const sortByPrice = () => {
-    if (businesses.price === "$") {
-      return businesses;
-    } else if (businesses.price === "$$") {
-      return businesses;
-    } else if (businesses.price === "$$$") {
-      return businesses;
-    } else if (businesses.price === "$$$$") {
-      return businesses;
-    }
-    return null;
+  const HomeText = () => {
+    return (
+      <div
+        style={{
+          fontSize: "25px",
+          padding: "110px 15px 15px 15px",
+          maxWidth: "450px",
+          margin: "auto",
+        }}
+      >
+        <div style={{ paddingBottom: "1em" }}>
+          Try searching things like...{" "}
+        </div>
+        <div>Coworking in Spain</div>
+        <div>Pizza in New York</div>
+        <div>Coffee in Los Angeles</div>
+        <div>Wine in Wisconsin</div>
+        <div>Best restaurants in Miami</div>
+        <div>Macarons in Palm Springs</div>
+        <div>Car rentals in Hawaii</div>
+        <div>Dessert in the Desert</div>
+        <div>Breakfast in Canada</div>
+        <div>Diving in Fiji</div>
+        <div>Cocktails in Oaxaca</div>
+        <div>Best steak in San Fran</div>
+        <div>Waterparks in Mexico</div>
+        <div>Hikes in Portland</div>
+      </div>
+    );
   };
 
   return (
@@ -186,18 +196,18 @@ function App(props) {
       <div>
         <img
           src={logo} //logo sizing, main page
-          style={{ width: "60vw", paddingTop: "2em" }}
+          style={{ width: "60vw", paddingTop: "1em" }}
           alt="BBM logo"
         />
       </div>
       <div>
         <form onSubmit={submit}>
-          <span style={{ fontSize: "22px" }}>Find</span>
+          <span style={{ fontSize: "20px" }}>Find</span>
           <input
             className="input"
             style={{
               width: "20vw",
-              height: "35px",
+              height: "25px",
               marginTop: "2em",
               paddingTop: "5px",
               borderRadius: "4px",
@@ -209,12 +219,12 @@ function App(props) {
             type="text"
             value={term}
           />
-          <span style={{ fontSize: "22px" }}>Near</span>
+          <span style={{ fontSize: "20px" }}>in</span>
           <input
             className="input"
             style={{
               width: "20vw",
-              height: "35px",
+              height: "25px",
               marginTop: "2em",
               paddingTop: "5px",
               borderRadius: "4px",
@@ -230,7 +240,7 @@ function App(props) {
           />
           <button
             style={{
-              height: "43px",
+              height: "37px",
               marginTop: "15px",
               paddingBottom: "0",
               marginBottom: "0",
@@ -240,18 +250,34 @@ function App(props) {
               style={{
                 height: "35px",
                 borderRadius: "4px",
+                marginBottom: "-10px",
+                paddingBottom: "0",
               }}
               src={searchButton} //logo sizing, main page
               alt="Search button"
             />
           </button>
         </form>
-        <Price />
-        <button onClick={ShowOpen}>Open Now</button>
+
+        <TotalResults />
       </div>
-      <TotalResults />
-      <ShowBusinesses />
-      <ShowReviews />
+      {businesses.length > 0 ? (
+        <div>
+          <ShowBusinesses /> <ShowReviews />
+          <Reviews />
+        </div>
+      ) : (
+        <div
+          style={{
+            fontSize: "25px",
+            padding: "0px 15px 15px 15px",
+            maxWidth: "450px",
+            margin: "auto",
+          }}
+        >
+          <HomeText />
+        </div>
+      )}
     </div>
   );
 }

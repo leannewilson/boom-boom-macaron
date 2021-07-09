@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-function Price(props) {
+function Price({ setPrice }) {
   const [open, setOpen] = useState(false);
   const container = useRef(null);
 
@@ -26,12 +26,10 @@ function Price(props) {
       </button>
       {open && (
         <div className="price-dropdown ">
-          <ul>
-            <li>$</li>
-            <li>$$</li>
-            <li>$$$</li>
-            <li>$$$$</li>
-          </ul>
+          <button onClick={() => setPrice("$")}>$</button>
+          <button onClick={() => setPrice("$$")}>$$</button>
+          <button onClick={() => setPrice("$$$")}>$$$</button>
+          <button onClick={() => setPrice("$$$$")}>$$$$</button>
         </div>
       )}
     </div>

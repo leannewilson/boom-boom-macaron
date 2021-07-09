@@ -63,7 +63,7 @@ function ReservationCalendar2(props) {
     };
 
     return (
-      <div className="App">
+      <div className="revervation-modals">
         {isOpen && (
           <>
             <div className="overlay"></div>
@@ -164,14 +164,17 @@ function ReservationCalendar2(props) {
       <div>
         <img
           onClick={() => setInline(!inline)}
+          className="calendar-img"
           src="https://img.icons8.com/ios/50/000000/calendar--v2.png"
           alt="Make reservation"
         />
       </div>
       <div className="reservation-calendar">
         <ReservationCalendar />
-        <Modal />
       </div>
+      <span>
+        <Modal />
+      </span>
     </div>
   );
 }
