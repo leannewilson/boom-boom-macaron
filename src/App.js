@@ -91,8 +91,8 @@ function App(props) {
               src={b.image_url}
               alt="business images"
             />
-            <span>
-              <h2 className="result-name">{b.name}</h2>
+            <span className="biz-info">
+              <h2 className="result-name biz-info">{b.name}</h2>
               <h4 className="result-rating" style={{ paddingBottom: "10px" }}>
                 Rating:
                 <StarRating />
