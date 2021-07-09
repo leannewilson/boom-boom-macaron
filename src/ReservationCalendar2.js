@@ -149,10 +149,19 @@ function ReservationCalendar2(props) {
     return confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className="custom-ui">
+          <div
+            className="custom-ui"
+            style={{
+              backgroundColor: "white",
+              padding: " 20px",
+              marginTop: "20px",
+            }}
+          >
             <h1>Confirm reservation</h1>
-            <p>We look forward to seeing you.</p>
-            <button onClick={onClose}>Cancel</button>
+            <p style={{ padding: "15px" }}>We look forward to seeing you.</p>
+            <button style={{ marginRight: "10px" }} onClick={onClose}>
+              Cancel
+            </button>
             <button
               onClick={() => {
                 onClose();
@@ -165,14 +174,6 @@ function ReservationCalendar2(props) {
           </div>
         );
       },
-      // title: "Confirm reservation", // Title dialog
-      // message: "We look forward to seeing you.", // Message dialog
-      // childrenElement: () => <div></div>, // Custom UI or Component
-      // cancelLabel: "Cancel", // Text button cancel
-      // confirmLabel: "Confirm", // Text button confirm
-      // onConfirm: () => setInline(true), // Action after Confirm
-      // onCancel: () => alert("Action after Cancel"), // Action after Cancel
-      // overlayClassName: "overlay-custom-class-name", // Custom overlay class name
     });
   };
 

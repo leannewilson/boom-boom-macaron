@@ -2,12 +2,9 @@ import logo from "./logo.png";
 import "./App.css";
 import React, { useState } from "react";
 import axios from "axios";
-import { promises } from "stream";
 import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
-import Price from "./Price";
 import ReservationCalendar2 from "./ReservationCalendar2";
-import { Link } from "react-router-dom";
 
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
@@ -16,9 +13,7 @@ function App(props) {
   let [term, setTerm] = useState("");
   let [location, setLocation] = useState("");
   const [businesses, setBusinesses] = useState([]);
-  const [allBusinesses, setAllBusinesses] = useState([]);
   const [amountResults, setAmountResults] = useState();
-  const [reviews, setReviews] = useState([]);
 
   const search = () => {
     axios
@@ -33,36 +28,13 @@ function App(props) {
       .then((res) => {
         // console.log(res);
         setBusinesses(res.data.businesses);
-        setAllBusinesses(res.data.businesses);
+        // setAllBusinesses(res.data.businesses);
         setAmountResults(res.data.total);
-        getReviews(res.data.businesses);
+        // getReviews(res.data.businesses);
       })
       .catch((err) => {
         console.log("error");
       });
-  };
-
-  const getReviews = (allBusinesses) => {
-    let allReviews = allBusinesses.map(async (eachBusiness) => {
-      // console.log(eachBusiness);
-      return await axios.get(
-        `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${eachBusiness.id}/reviews`,
-        {
-          headers: {
-            Authorization: `Bearer ${API_KEY}`,
-          },
-        }
-      );
-    });
-    Promise.all(allReviews).then((res) => {
-      console.log(res);
-      let biggerBusinez = [];
-      allBusinesses.forEach((business, i) => {
-        business.reviews = res[i].data.reviews;
-      });
-      setBusinesses(allBusinesses);
-      setReviews(res);
-    });
   };
 
   const submit = (e) => {
@@ -73,49 +45,48 @@ function App(props) {
   const ShowBusinesses = (props) => {
     return businesses.map((b) => {
       return (
-        <div>
-          <a target="_blank" href={b.url}>
-            <div className="results-all" key={b.id}>
+        <div style={{ maxHeight: "400px" }}>
+          <div className="results-all" key={b.id}>
+            <a target="_blank" href={b.url}>
               <img
                 className="result-img"
                 src={b.image_url}
                 alt="business images"
               />
-              <span className="biz-info">
-                <div className="biz-info">
+            </a>
+            <span className="biz-info">
+              <div className="biz-info">
+                <a target="_blank" href={b.url}>
                   <h2 className="result-name biz-info">{b.name}</h2>
-                  <h4
-                    className="result-rating"
-                    style={{ paddingBottom: "10px" }}
-                  >
-                    Rating:
-                    <StarRating />
-                    {b.rating}
-                  </h4>
-                  <h4 className="result-price">Price: {b.price}</h4>
-                  <h4 className="result-reviews">
-                    Total reviews: {b.review_count}
-                  </h4>
-                  <div className="result-contact">
-                    <span className="result-address">
-                      <h4 className="result-address">
-                        {b.location.display_address[0]}
-                      </h4>
-                      <h4 className="result-address">
-                        {b.location.display_address[1]}
-                      </h4>
-                      <h4 className="result-address">
-                        {b.location.display_address[2]}
-                      </h4>
-                    </span>
-                    <span className="contact">
-                      <h4 className="result-phone">{b.display_phone}</h4>
-                    </span>
-                  </div>
+                </a>
+                <h4 className="result-rating" style={{ paddingBottom: "10px" }}>
+                  Rating:
+                  <StarRating />
+                  {b.rating}
+                </h4>
+                <h4 className="result-price">Price: {b.price}</h4>
+                <h4 className="result-reviews">
+                  Total reviews: {b.review_count}
+                </h4>
+                <div className="result-contact">
+                  <span className="result-address">
+                    <h4 className="result-address">
+                      {b.location.display_address[0]}
+                    </h4>
+                    <h4 className="result-address">
+                      {b.location.display_address[1]}
+                    </h4>
+                    <h4 className="result-address">
+                      {b.location.display_address[2]}
+                    </h4>
+                  </span>
+                  <span className="contact">
+                    <h4 className="result-phone">{b.display_phone}</h4>
+                  </span>
                 </div>
-              </span>
-            </div>
-          </a>
+              </div>
+            </span>
+          </div>
           <div className="reso-overlay">
             <ReservationCalendar2 />
           </div>
