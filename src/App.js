@@ -17,10 +17,8 @@ function App(props) {
   let [location, setLocation] = useState("");
   const [businesses, setBusinesses] = useState([]);
   const [allBusinesses, setAllBusinesses] = useState([]);
-
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
-  const [price, setThePrice] = useState("");
   const setPrice = (p) => {
     console.log(p);
     let copyOfBusinesses = [...allBusinesses].filter(
@@ -50,8 +48,6 @@ function App(props) {
         console.log("error");
       });
   };
-
-  console.log(businesses, "?");
 
   const getReviews = (allBusinesses) => {
     let allReviews = allBusinesses.map(async (eachBusiness) => {
@@ -98,13 +94,10 @@ function App(props) {
                 <StarRating />
                 {b.rating}
               </h4>
-              <h4 className="result-price">Price: {b.price}</h4>
+              <h4 className="result-price"></h4>
               <h4 className="result-reviews">
                 Total reviews: {b.review_count}
-                <Reviews />
               </h4>
-              {/* <ReviewModal /> */}
-              {/* <div>{b.reviews.map((a) => a.text)}</div> */}
               <div className="result-contact">
                 <span className="result-address">
                   <h4 className="result-address">
