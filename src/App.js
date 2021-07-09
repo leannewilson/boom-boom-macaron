@@ -115,32 +115,14 @@ function App(props) {
                 </div>
               </span>
             </div>
-            <div className="reso-overlay">
-              <ReservationCalendar2 />
-            </div>
           </a>
+          <div className="reso-overlay">
+            <ReservationCalendar2 />
+          </div>
         </div>
       );
     });
   };
-
-  // const ShowReviews = (props) => {
-  //   return reviews.map((r, index) => {
-  //     console.log(r.data);
-  //     return (
-  //       <div key={index} style={{ width: "50%", margin: "auto" }}>
-  //         <h4>{r.data.reviews[0].rating}</h4>
-  //         <h4>{r.data.reviews[0].time_created}</h4>
-  //         <h4>{r.data.reviews[0].user.name}</h4>
-  //         <h4>{r.data.reviews[0].text}</h4>
-  //         <img
-  //           src="https://randomuser.me/api/portraits/thumb/women/5.jpg"
-  //           alt="user photo"
-  //         ></img>
-  //       </div>
-  //     );
-  //   });
-  // };
 
   const TotalResults = () => {
     if (amountResults > 0) {
@@ -166,7 +148,7 @@ function App(props) {
         <div style={{ paddingBottom: "1em" }}>
           Try searching things like...{" "}
         </div>
-        <div>Coworking in Spain</div>
+        <div>Sushi in San Diego</div>
         <div>Pizza in New York</div>
         <div>Coffee in Los Angeles</div>
         <div>Wine in Wisconsin</div>

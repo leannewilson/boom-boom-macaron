@@ -157,6 +157,7 @@ function ReservationCalendar2(props) {
               onClick={() => {
                 onClose();
                 setIsOpen(false);
+                setInline(false);
               }}
             >
               Confirm!
