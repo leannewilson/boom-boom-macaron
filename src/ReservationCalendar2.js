@@ -147,15 +147,31 @@ function ReservationCalendar2(props) {
   const confirmation = (e) => {
     console.log("confirm");
     return confirmAlert({
-      title: "Confirm reservation", // Title dialog
-      message: "We look forward to seeing you.", // Message dialog
-      childrenElement: () => <div></div>, // Custom UI or Component
-
-      cancelLabel: "Cancel", // Text button cancel
-      confirmLabel: "Confirm", // Text button confirm
-      onConfirm: () => alert("Action after Confirm"), // Action after Confirm
-      onCancel: () => alert("Action after Cancel"), // Action after Cancel
-      overlayClassName: "overlay-custom-class-name", // Custom overlay class name
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <h1>Confirm reservation</h1>
+            <p>We look forward to seeing you.</p>
+            <button onClick={onClose}>Cancel</button>
+            <button
+              onClick={() => {
+                onClose();
+                setIsOpen(false);
+              }}
+            >
+              Confirm!
+            </button>
+          </div>
+        );
+      },
+      // title: "Confirm reservation", // Title dialog
+      // message: "We look forward to seeing you.", // Message dialog
+      // childrenElement: () => <div></div>, // Custom UI or Component
+      // cancelLabel: "Cancel", // Text button cancel
+      // confirmLabel: "Confirm", // Text button confirm
+      // onConfirm: () => setInline(true), // Action after Confirm
+      // onCancel: () => alert("Action after Cancel"), // Action after Cancel
+      // overlayClassName: "overlay-custom-class-name", // Custom overlay class name
     });
   };
 

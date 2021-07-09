@@ -7,7 +7,6 @@ import StarRating from "./StarRating";
 import searchButton from "./searchButton.png";
 import Price from "./Price";
 import ReservationCalendar2 from "./ReservationCalendar2";
-import Reviews from "./Reviews.js";
 
 const API_KEY =
   "zBeFhr-sk0sMFQM3qcHPF5t75MlBr6RYCBvFvt4W336rlYvW3T8pEyf2cTIeYSSZUJOJ9bzf7DuzSGnsCZoEvU9wMM2P_K_6KjYmqN8RSSGEU3gvZCz5tQOjYnLfYHYx";
@@ -19,18 +18,11 @@ function App(props) {
   const [allBusinesses, setAllBusinesses] = useState([]);
   const [amountResults, setAmountResults] = useState();
   const [reviews, setReviews] = useState([]);
-  const setPrice = (p) => {
-    console.log(p);
-    let copyOfBusinesses = [...allBusinesses].filter(
-      (eachBiz) => eachBiz.price === p
-    );
-    setBusinesses(copyOfBusinesses);
-  };
 
   const search = () => {
     axios
       .get(
-        `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&limit=10`,
+        `https://iron-cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=${term}&location=${location}&limit=20`,
         {
           headers: {
             Authorization: `Bearer ${API_KEY}`,
@@ -94,7 +86,7 @@ function App(props) {
                 <StarRating />
                 {b.rating}
               </h4>
-              <h4 className="result-price"></h4>
+              <h4 className="result-price">Price: {b.price}</h4>
               <h4 className="result-reviews">
                 Total reviews: {b.review_count}
               </h4>
@@ -124,23 +116,23 @@ function App(props) {
     });
   };
 
-  const ShowReviews = (props) => {
-    return reviews.map((r, index) => {
-      console.log(r.data);
-      return (
-        <div key={index} style={{ width: "50%", margin: "auto" }}>
-          <h4>{r.data.reviews[0].rating}</h4>
-          <h4>{r.data.reviews[0].time_created}</h4>
-          <h4>{r.data.reviews[0].user.name}</h4>
-          <h4>{r.data.reviews[0].text}</h4>
-          <img
-            src="https://randomuser.me/api/portraits/thumb/women/5.jpg"
-            alt="user photo"
-          ></img>
-        </div>
-      );
-    });
-  };
+  // const ShowReviews = (props) => {
+  //   return reviews.map((r, index) => {
+  //     console.log(r.data);
+  //     return (
+  //       <div key={index} style={{ width: "50%", margin: "auto" }}>
+  //         <h4>{r.data.reviews[0].rating}</h4>
+  //         <h4>{r.data.reviews[0].time_created}</h4>
+  //         <h4>{r.data.reviews[0].user.name}</h4>
+  //         <h4>{r.data.reviews[0].text}</h4>
+  //         <img
+  //           src="https://randomuser.me/api/portraits/thumb/women/5.jpg"
+  //           alt="user photo"
+  //         ></img>
+  //       </div>
+  //     );
+  //   });
+  // };
 
   const TotalResults = () => {
     if (amountResults > 0) {
@@ -254,7 +246,7 @@ function App(props) {
       </div>
       {businesses.length > 0 ? (
         <div>
-          <ShowBusinesses /> <ShowReviews />
+          <ShowBusinesses />
           {/* <Reviews /> */}
         </div>
       ) : (
