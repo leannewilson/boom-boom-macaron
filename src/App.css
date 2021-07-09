@@ -81,6 +81,7 @@ li:hover {
 /* result layout */
 .results-all {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   border-color: #e2e5e9;
   box-shadow: 0 5px 10px #e2e5e9;

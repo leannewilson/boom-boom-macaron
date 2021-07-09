@@ -181,11 +181,9 @@ function App(props) {
         <div>Macarons in Palm Springs</div>
         <div>Car rentals in Hawaii</div>
         <div>Dessert in the Desert</div>
-        <div>Breakfast in Canada</div>
-        <div>Diving in Fiji</div>
+        <div>Breakfast in Vancouver</div>
         <div>Cocktails in Oaxaca</div>
         <div>Best steak in San Fran</div>
-        <div>Waterparks in Mexico</div>
         <div>Hikes in Portland</div>
       </div>
     );
@@ -264,7 +262,7 @@ function App(props) {
       {businesses.length > 0 ? (
         <div>
           <ShowBusinesses /> <ShowReviews />
-          <Reviews />
+          {/* <Reviews /> */}
         </div>
       ) : (
         <div
